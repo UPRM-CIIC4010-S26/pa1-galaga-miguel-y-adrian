@@ -57,6 +57,10 @@ void Program::Update() {
 
         for (Projectile& p : Projectile::projectiles) { 
             p.update(); 
+            if (p.ID==1 && HitBox::Collision(p.getHitBox(), player->hitBox)) {
+                PlayerReset();
+                p.del = true;
+            }
 
         }
 

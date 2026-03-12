@@ -142,12 +142,16 @@ void Program::DrawStartup() {
 void Program::DrawPauseScreen() {
     DrawRectangle(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight(), Color{0, 0, 0, 125});
     DrawText("Paused", (GetScreenWidth() / 2) - 85, GetScreenHeight() / 2 - 60, 48, WHITE);
+    std::string scoreText = "Score: " + std::to_string(score);
+    DrawText(scoreText.c_str(), (GetScreenWidth() / 2) - 80, (GetScreenHeight() / 2) - 10, 32, WHITE);
     DrawText("Press Enter", (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
 
 void Program::DrawGameOver() {
     DrawRectangle(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight(), Color{0, 0, 0, 125});
     DrawText("Game Over", (GetScreenWidth() / 2) - 380, 50, 144, WHITE);
+    std::string scoreText = "Score: " + std::to_string(score);
+    DrawText(scoreText.c_str(), (GetScreenWidth() / 2) - 80, 220, 32, WHITE);
     DrawText("Press Enter", (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
 
@@ -197,6 +201,12 @@ void Program::Reset() {
 
 void Program::ScoreIncrease(int scoreEarned) {
     score += scoreEarned;
-        
+
+    if (score % 1000 == 0 && score != 0) {
+        lives++;
+        if (lives > 5) {
+            lives = 5;
+        }
+    }
     
 }

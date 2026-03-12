@@ -35,7 +35,7 @@ void Program::Update() {
     pauseFrames = std::max(pauseFrames - 1, 0);
 
     if (!startup && !paused && !gameOver && pauseFrames <= 0) {
-        Enemy::ManageEnemies(player->hitBox);
+        ScoreIncrease(Enemy::ManageEnemies(player->hitBox));
         StdEnemy::attackReset();
         ManageEnemyRespawns();
         player->update();
@@ -156,6 +156,7 @@ void Program::KeyInputs() {
     if (!paused && !startup && IsKeyPressed('O')) gameOver = !gameOver;
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
+    if (IsKeyPressed('K')) ScoreIncrease(500); 
     
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
@@ -191,19 +192,11 @@ void Program::Reset() {
     count = 0;
     delay = 0;
     lives = 3;
+    score = 0;
+}
 
-    Enemy::enemies.push_back(std::pair<std::pair<float, float>, Enemy*> {
-        std::pair<float, float>{350, 150},
-        new SpEnemy(350, 150)
-    });
-
-    for (int i = 0; i<30; i++){
-        float x = 250 + 50 * (i % 10);
-        float y = 200 + 50 * ( i / 10);
-
-        Enemy::enemies.push_back(std::pair<std::pair<float, float>, Enemy*> {
-            std::pair<float, float>{x, y},
-            new StdEnemy(x, y)
-        });
-    }
+void Program::ScoreIncrease(int scoreEarned) {
+    score += scoreEarned;
+        
+    
 }

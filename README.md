@@ -12,7 +12,7 @@ Don't forget that you must also fill out an evaluation form in Moodle to conside
 ## Grading
 
 802-25-9914 Adrian Barbosa Concepcion adrian.barbosa@upr.edu
-(STUDENT NUMBER HERE) (STUDENT NAME HERE) (STUDENT EMAIL HERE)
+802-25-6856 Miguelangel Martinez Perez miguelangel.martinez@upr.edu
 
 Any project that doesn't compile will receive a 0.
 

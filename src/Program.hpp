@@ -15,6 +15,7 @@ class Program {
         Background background = Background();
         Player* player = new Player((GetScreenWidth() / 2) - 15, GetScreenHeight() * 0.75f);
         int respawnCooldown = 1080;
+        int respawnDecrement = 1;
         int respawns = 0;
         int count = 0;
         int delay = 0;

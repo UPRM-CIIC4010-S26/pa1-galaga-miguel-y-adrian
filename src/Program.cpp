@@ -93,7 +93,7 @@ void Program::Draw() {
 void Program::ManageEnemyRespawns() {
     delay = std::max(delay - 1, 0);
 
-    respawnCooldown -= 1;
+    respawnCooldown = std::max(respawnCooldown - respawnDecrement, 0);
     if (respawnCooldown <= 0) {
         respawnCooldown = 1080;
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
@@ -142,15 +142,17 @@ void Program::DrawStartup() {
 void Program::DrawPauseScreen() {
     DrawRectangle(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight(), Color{0, 0, 0, 125});
     DrawText("Paused", (GetScreenWidth() / 2) - 85, GetScreenHeight() / 2 - 60, 48, WHITE);
-    std::string scoreText = "Score: " + std::to_string(score);
+    std::string scoreText = "Score: " + std::to_string(score); // esto se añadio para poder ver el score.
     DrawText(scoreText.c_str(), (GetScreenWidth() / 2) - 80, (GetScreenHeight() / 2) - 10, 32, WHITE);
+    std:: string livesText = "Lives: " + std::to_string(lives); // esto se añadio para poder ver las vidas.
+    DrawText(livesText.c_str(), (GetScreenWidth() / 2) - 80, (GetScreenHeight() / 2) + 20, 32, WHITE);
     DrawText("Press Enter", (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
 
 void Program::DrawGameOver() {
     DrawRectangle(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight(), Color{0, 0, 0, 125});
     DrawText("Game Over", (GetScreenWidth() / 2) - 380, 50, 144, WHITE);
-    std::string scoreText = "Score: " + std::to_string(score);
+    std::string scoreText = "Score: " + std::to_string(score); // esto se añadio para poder ver el score.
     DrawText(scoreText.c_str(), (GetScreenWidth() / 2) - 80, 220, 32, WHITE);
     DrawText("Press Enter", (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
@@ -201,6 +203,9 @@ void Program::Reset() {
 
 void Program::ScoreIncrease(int scoreEarned) {
     score += scoreEarned;
+
+    respawnDecrement = 1 + (score / 2000);
+    if (respawnDecrement > 5) respawnDecrement = 5;
 
     if (score % 1000 == 0 && score != 0) {
         lives++;
